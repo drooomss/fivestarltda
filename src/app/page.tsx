@@ -28,7 +28,9 @@ const perks =[
 export default function Home() {
   return (
     <>
+      
       <MaxWidthWrapper>
+       
         <div className="py-20 mx-auto text-center flex flex-col items-center max-w-3xl">
           <h1 className="text-5xl font-bold tracking-tight text-green-500 sm:2xl:">
             ROPA Y CALZADO <br />
@@ -46,7 +48,7 @@ export default function Home() {
             <Button variant="ghost">Calidad Comprobada &rarr;</Button>
           </div>
         </div>
-
+        
         {/* TODO: List Products */}
       </MaxWidthWrapper>
 
@@ -78,6 +80,7 @@ export default function Home() {
           </div>
         </MaxWidthWrapper>
       </section>
+      
     </>
   );
 }

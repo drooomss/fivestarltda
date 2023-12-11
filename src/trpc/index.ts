@@ -1,9 +1,9 @@
-import { publicProcedure, router } from "./trpc";
+import { authRouter } from "./auth-router"
+import { publicProcedure, router } from "./trpc"
 
-export const appRouter = router({
-    anyApiRouter: publicProcedure.query(() => {
-        return 'hello'
-    }),
+
+export const appRouter = router ({
+    auth: authRouter,
 })
 
 

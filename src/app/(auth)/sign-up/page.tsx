@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AuthCredentialsValidator, TAuthCredentialsValidator } from "@/lib/validators/account-credentials-validator";
+import { trpc } from "@/trpc/client";
 
 const Page = () => {
   const {
@@ -18,10 +19,19 @@ const Page = () => {
     formState: { errors },
   } = useForm<TAuthCredentialsValidator>({
     resolver: zodResolver(AuthCredentialsValidator),
-  });
+  })
 
-  const onSubmit = ({ email, password }: TAuthCredentialsValidator) => {
-    // Envia la data al servidor
+const {mutate, isLoading} = 
+trpc.auth.createPayloadUser.useMutation({
+
+})
+
+  const onSubmit = ({
+     email, 
+     password 
+    }: TAuthCredentialsValidator) => {
+    //Envia la data al servidor
+    mutate({email, password})
   };
 
   return (
@@ -36,6 +46,16 @@ const Page = () => {
               alt="Picture of the author"
             />
             <h1 className="text-2xl font-bold">Crea Una Cuenta</h1>
+            <Link
+                  className={buttonVariants({
+                    variant: "link",
+                    className: "gap-1.5",
+                  })}
+                  href="/sign-in"
+                >
+                  Ya tienes una cuenta? Inicia Sesión
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
           </div>
 
           <div className="grid gap-6">
@@ -51,17 +71,13 @@ const Page = () => {
                     placeholder="email@ejemplo.com"
                   />  
                 </div>
-              </div>
-            </form>
-          </div>
 
-          <div className="grid gap-6">
-            <form>
-              <div className=" grid gap-2">
+                
                 <div className="grid gap-1 py-2">
                   <Label htmlFor="password">Contraseña</Label>
                   <Input
                     {...register("password")}
+                    type="password"
                     className={cn({
                       "focus-visible:ring-red-500": errors.password,
                     })}
@@ -70,16 +86,7 @@ const Page = () => {
                 </div>
 
                 <Button>Iniciar Sesión</Button>
-                <Link
-                  className={buttonVariants({
-                    variant: "link",
-                    className: "gap-1.5",
-                  })}
-                  href="/sign-in"
-                >
-                  Ya tienes una cuenta? Inicia Sesión
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
+                
               </div>
             </form>
           </div>
